@@ -1,6 +1,7 @@
 .gradle/
 .idea/*
 !.idea/codeStyles/
+app/build/
 build/
 app/libs-source-data/
 credential.properties
