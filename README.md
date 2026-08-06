@@ -1,4 +1,7 @@
-# Family Gem
+# *fork of* Family Gem  
+
+[![Build Debug APK](https://github.com/yusdesign/FamilyGem/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/yusdesign/FamilyGem/actions/workflows/build.yml)
+
 ### _Create your own family tree_
 
 Family Gem is an app for Android designed to manage family trees.\
