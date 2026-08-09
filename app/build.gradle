@@ -68,10 +68,6 @@ android {
             kotlin.srcDirs += 'src/main/java'
         }
     }
-    kotlinOptions {
-        jvmTarget = "17"
-        freeCompilerArgs += ["-Xjvm-default=enable"]
-    }
 }
 dependencies {
     // Otherwise Glide 5.0.4+ throws NoClassDefFoundError on API <= 23
