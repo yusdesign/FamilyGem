@@ -25,6 +25,7 @@ import app.familygem.util.Util.caseString
 import app.familygem.util.Util.string
 import app.familygem.visitor.MediaList
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -54,6 +55,7 @@ import java.util.Locale
 import java.util.zip.ZipException
 import java.util.zip.ZipFile
 import java.util.zip.ZipInputStream
+import app.familygem.model.PersonWrapper // @yus: Added import for PersonWrapper
 
 fun Tree.getBasicData(): String {
     val builder = StringBuilder()
@@ -117,7 +119,7 @@ object TreeUtil {
             json = updateTreeLanguage(json)
             gedcom = JsonParser().fromJson(json)
             if (gedcom == null) throw Exception(string(R.string.no_useful_data))
-
+            
             // @yus: Load PersonWrapper data from the separate JSON file
             loadWrappers(treeId)
             
@@ -149,7 +151,7 @@ object TreeUtil {
             val json = FileUtils.readFileToString(wrappersFile, "UTF-8")
             val gson = Gson()
             // We need to define a TypeToken for Map<String, PersonWrapper>
-            val type = object : com.google.gson.reflect.TypeToken<Map<String, PersonWrapper>>() {}.type
+            val type = object : TypeToken<Map<String, PersonWrapper>>() {}.type
             Global.personWrappers = gson.fromJson(json, type)
         } catch (e: Exception) {
             // If loading fails, start fresh
@@ -228,7 +230,7 @@ object TreeUtil {
         }
         try {
             FileUtils.writeStringToFile(File(Global.context.filesDir, "$treeId.json"), JsonParser().toJson(gedcom), "UTF-8")
-
+            
             // @yus: Save PersonWrapper data to a separate JSON file
             saveWrappers(treeId)
             
@@ -248,10 +250,6 @@ object TreeUtil {
         try {
             val wrappersFile = File(Global.context.filesDir, "${treeId}_wrappers.json")
             val gson = Gson()
-            // We need to save only the wrappers that belong to this tree
-            // Since Global.personWrappers may contain data from other trees, we filter by treeId
-            // For now, we assume all wrappers belong to the current tree
-            // A more robust solution would store treeId in PersonWrapper
             val json = gson.toJson(Global.personWrappers)
             FileUtils.writeStringToFile(wrappersFile, json, "UTF-8")
         } catch (e: Exception) {
@@ -278,7 +276,7 @@ object TreeUtil {
         treeFile.delete()
         val mediaDir = Global.context.getExternalFilesDir(treeId.toString())
         if (mediaDir != null) FileUtil.deleteFilesAndDirs(mediaDir)
-        if (Global.settings.openTree == treeId){
+        if (Global.settings.openTree == treeId) {
             Global.gc = null
             // @yus: Clear wrappers for the deleted tree
             Global.personWrappers = HashMap()
@@ -413,6 +411,7 @@ object TreeUtil {
                 return
             }
             gedcom.createIndexes() // Necessary to calculate the generations
+            
             // @yus: Process custom tags from the imported GEDCOM
             processCustomTags(gedcom)
             
@@ -422,23 +421,16 @@ object TreeUtil {
             val jsonParser = JsonParser()
             printWriter.print(jsonParser.toJson(gedcom))
             printWriter.close()
-
+            
             // @yus: Save the extracted wrapper data to a file
             saveWrappers(id)
-
-            // Tree name and settings...
-            var name: String = FileUtil.extractFilename(context, uri, context.getString(R.string.tree) + " $id")
-            if (name.lastIndexOf('.') > 0)
-                name = name.substring(0, name.lastIndexOf('.'))
-            Global.settings.addTree(Tree(id, name, gedcom.people.size, countGenerations(gedcom, null), findRootId(gedcom), null, null, 0))
-            Notifier(context, gedcom, id, Notifier.What.CREATE)
             
             // Tree name
-            var name: String = FileUtil.extractFilename(context, uri, context.getString(R.string.tree) + " $id")
-            if (name.lastIndexOf('.') > 0) // Removes the extension
-                name = name.substring(0, name.lastIndexOf('.'))
+            var treeName: String = FileUtil.extractFilename(context, uri, context.getString(R.string.tree) + " $id")
+            if (treeName.lastIndexOf('.') > 0) // Removes the extension
+                treeName = treeName.substring(0, treeName.lastIndexOf('.'))
             // Saves the settings
-            Global.settings.addTree(Tree(id, name, gedcom.people.size, countGenerations(gedcom, null), findRootId(gedcom), null, null, 0))
+            Global.settings.addTree(Tree(id, treeName, gedcom.people.size, countGenerations(gedcom, null), findRootId(gedcom), null, null, 0))
             Notifier(context, gedcom, id, Notifier.What.CREATE)
             withContext(Main) {
                 // If necessary propose to show advanced tools
@@ -491,19 +483,6 @@ object TreeUtil {
         }
     }
 
-    // @yus: Save PersonWrapper data to a separate JSON file
-    private fun saveWrappers(treeId: Int) {
-        try {
-            val wrappersFile = File(Global.context.filesDir, "${treeId}_wrappers.json")
-            val gson = Gson()
-            val json = gson.toJson(Global.personWrappers)
-            FileUtils.writeStringToFile(wrappersFile, json, "UTF-8")
-        } catch (e: Exception) {
-            // Log or handle error, but don't crash the save process
-            e.printStackTrace()
-        }
-    }
-    
     /** Launches [downloadSharedTree] in a coroutine, managing the results.
      * @param onRefresh Action to display results
      * @param onReset Action to restore interface (usually hiding progress view)
@@ -644,7 +623,7 @@ object TreeUtil {
             val zipped = gson.fromJson(json, Settings.ZippedTree::class.java)
             val tree = Tree(treeId, zipped.title, zipped.persons, zipped.generations, zipped.root, zipped.settings, zipped.shares, zipped.grade)
             Global.settings.addTree(tree)
-
+            
             // @yus: Ensure a wrappers file exists for the new tree
             val wrappersFile = File(context.filesDir, "${treeId}_wrappers.json")
             if (!wrappersFile.exists()) {
