@@ -1,4 +1,4 @@
-package app.familygem;
+tpackage app.familygem;
 
 import android.app.Application;
 import android.content.Context;
@@ -61,20 +61,20 @@ public class Global extends Application {
     public static BackupViewModel backupViewModel;
 
     // @yus: Map to store custom data for each person, keyed by person ID
-    public static Map<String, PersonWrapper> personWrappers = new HashMap<>();
+    public static Map<String, PersonExtra> personWrappers = new HashMap<>();
 
     // @yus: Helper method to get a wrapper for a person
-    public static PersonWrapper getWrapper(Person person) {
+    public static PersonExtra getWrapper(Person person) {
         if (person == null || person.getId() == null) return null;
         return personWrappers.get(person.getId());
     }
 
     // @yus: Helper method to get or create a wrapper for a person
-    public static PersonWrapper getOrCreateWrapper(Person person) {
+    public static PersonExtra getOrCreateWrapper(Person person) {
         if (person == null || person.getId() == null) return null;
-        PersonWrapper wrapper = personWrappers.get(person.getId());
+        PersonExtra wrapper = personWrappers.get(person.getId());
         if (wrapper == null) {
-            wrapper = new PersonWrapper(person.getId());
+            wrapper = new PersonExtra(person.getId());
             personWrappers.put(person.getId(), wrapper);
         }
         return wrapper;
