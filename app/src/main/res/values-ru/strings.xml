@@ -210,7 +210,7 @@
     <string name="all_imported_delete">Все обновления были импортированы.
 \nХотите удалить импортированное дерево\?</string>
     <string name="confirm">Подтвердить</string>
-    <string name="accepted_news">Вы приняли %d обновлений:\n\t%d добавлений\n\t%d замен\n\t%d удалений</string>
+    <string name="accepted_news" formatted="false">Вы приняли %d обновлений:\n\t%d добавлений\n\t%d замен\n\t%d удалений</string>
     <string name="confirm_news">Подтвердить обновления</string>
     <string name="ignore">Пропустить</string>
     <string name="replace">Заменить</string>
@@ -320,7 +320,7 @@
     <string name="zip_exported_ok">Файл ZIP экспортирован.</string>
     <string name="gedcom_exported_ok">Файл GEDCOM экспортирован.</string>
     <string name="family_as">Семья (как %s)</string>
-    <string name="turns_years_old">%s сегодня исполняется %d лет.</string>
+    <string name="turns_years_old" formatted="false">%s сегодня исполняется %d лет.</string>
     <string name="birthdays">Дни рождения</string>
     <string name="allow_developer_access">Разрешить разработчику программы доступ к общему дереву</string>
     <string name="remind_later">Напомните мне позже</string>
