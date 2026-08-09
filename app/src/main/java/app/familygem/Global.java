@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
-import app.familygem.model.PersonWrapper; // @yus: Association is not directly used here, but may be needed later
+import app.familygem.model.PersonExtra; // @yus: Association is not directly used here, but may be needed later
 
 public class Global extends Application {
 
