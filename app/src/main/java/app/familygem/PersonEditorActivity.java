@@ -34,7 +34,7 @@ import app.familygem.constant.Relation;
 import app.familygem.util.EventUtilKt;
 import app.familygem.util.FamilyUtil;
 import app.familygem.util.TreeUtil;
-import app.familygem.model.PersonExtra;
+import app.familygem.model.PersonExtra; // @yus: Import for PersonExtra
 
 public class PersonEditorActivity extends BaseActivity {
 
@@ -56,11 +56,11 @@ public class PersonEditorActivity extends BaseActivity {
     private EditText deathDate;
     private DateEditorLayout deathDateEditor;
     private EditText deathPlace;
+    private EditText socialEstateView; // @yus: Social Estate field
     private boolean fromFamilyActivity; // Previous activity was DetailActivity
     private boolean nameFromPieces; // If the given name and surname come from the Given and Surname pieces, they must return there
     private boolean surnameBefore; // The given name comes after the surname, e.g. "/Simpson/ Homer"
     private String nameSuffix; // Last part of the name, not editable here
-    private EditText socialEstateView; // @yus: Socials association
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +88,7 @@ public class PersonEditorActivity extends BaseActivity {
         deathDate = findViewById(R.id.editor_deathDate);
         deathDateEditor = findViewById(R.id.editor_deathDateEditor);
         deathPlace = findViewById(R.id.editor_deathPlace);
+        socialEstateView = findViewById(R.id.editor_social_estate); // @yus: Find Social Estate view
 
         // Forbidden "/" character in name
         InputFilter[] filters = new InputFilter[]{(source, start, end, dest, dstart, dend) -> {
@@ -129,8 +130,6 @@ public class PersonEditorActivity extends BaseActivity {
             save();
         });
 
-        socialEstateView = findViewById(R.id.editor_social_estate); // @yus: Social Estate Editor
-        
         if (TreeUtil.INSTANCE.isGlobalGedcomOk(this::populateFields)) populateFields();
     }
 
@@ -236,10 +235,12 @@ public class PersonEditorActivity extends BaseActivity {
         birthDateEditor.initialize(birthDate, findViewById(R.id.editor_birthAlert));
         deathDateEditor.initialize(deathDate, findViewById(R.id.editor_deathAlert));
 
-        // @yus: Social Person Extra Data
-        PersonExtra wrapper = getWrapper(person);
-        if (wrapper != null){
-            socialEstateView.setText(wrapper.getSocialEstate());
+        // @yus: Load Social Estate data
+        if (person != null) {
+            PersonExtra wrapper = Global.getWrapper(person);
+            if (wrapper != null) {
+                socialEstateView.setText(wrapper.getSocialEstate());
+            }
         }
     }
 
@@ -381,13 +382,11 @@ public class PersonEditorActivity extends BaseActivity {
             person.addEventFact(death);
         }
 
-        // @yus: Save Social Estate
-        PersonExtra wrapper = getWrapper(person);
-        if (wrapper == null){
-            wrapper = new PersonExtra(person);
-            // Store for wrapper (e.g. Global.wrappers.map)
+        // @yus: Save Social Estate data
+        PersonExtra wrapper = Global.getOrCreateWrapper(person);
+        if (wrapper != null) {
+            wrapper.setSocialEstate(socialEstateView.getText().toString().trim());
         }
-        wrapper.setSocialEstate(socialEstateView.getText().toString().trim());
 
         // Finalization of new person
         Object[] modifications = {person, null}; // The null is used to receive a possible Family
