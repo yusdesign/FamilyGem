@@ -414,7 +414,7 @@ object TreeUtil {
             gedcom.createIndexes() // Necessary to calculate the generations
             
             // @yus: Process custom tags from the imported GEDCOM
-            processCustomTags(gedcom)
+            // processCustomTags(gedcom)
             
             // Saves the JSON file
             val id = Global.settings.max() + 1
@@ -461,28 +461,28 @@ object TreeUtil {
     }
 
     // @yus: New function to process custom tags
-    private fun processCustomTags(gedcom: Gedcom) {
+    // private fun processCustomTags(gedcom: Gedcom) {
         // Clear wrappers for this import
-        Global.personWrappers = HashMap()
+    //    Global.personWrappers = HashMap()
     
-        gedcom.people.forEach { person ->
-            val wrapper = Global.getOrCreateWrapper(person)
+    //    gedcom.people.forEach { person ->
+    //        val wrapper = Global.getOrCreateWrapper(person)
         
             // Look for _SOSL in extensions
-            person.getExtension("_SOSL")?.let { socialEstate ->
-                wrapper.socialEstate = socialEstate.toString()
-            }
+    //        person.getExtension("_SOSL")?.let { socialEstate ->
+    //            wrapper.socialEstate = socialEstate.toString()
+    //        }
         
             // Look for ASSO structures (this is more complex)
             // The ModelParser may store custom structures in extensions
             // You'll need to inspect how it handles ASSO tags
             // This is a placeholder for the logic to parse ASSO structures
             // For now, we'll just log a message
-            person.getExtension("ASSO")?.let { assocData ->
+    //        person.getExtension("ASSO")?.let { assocData ->
                 // Parse the association data and add to wrapper
-            }
-        }
-    }
+    //        }
+    //    }
+    // }
 
     /** Launches [downloadSharedTree] in a coroutine, managing the results.
      * @param onRefresh Action to display results
