@@ -25,11 +25,11 @@ android {
     namespace = 'app.familygem'
     compileSdk = 36 // The minor API level is handled separately or can be specified differently.
     defaultConfig {
-        applicationId = 'app.familygem'
+        applicationId = 'app.familygem.yus'
         minSdk = 21
         targetSdk = 36.1
-        versionCode = 28
-        versionName = '1.2.0.6'
+        versionCode = 29
+        versionName = '1.2.0.7.yus'
         resourceConfigurations += ['ar', 'bg', 'ckb', 'cs', 'da', 'de', 'en', 'eo', 'es', 'fa', 'fr', 'hr', 'hu', 'in', 'it', 'iw', 'kn',
                                    'lt', 'mr', 'nb', 'nl', 'pl', 'pt', 'ru', 'sk', 'sl', 'sr', 'sv', 'ta', 'ti', 'tr', 'uk', 'vi', 'zh']
         def passkey = ''
