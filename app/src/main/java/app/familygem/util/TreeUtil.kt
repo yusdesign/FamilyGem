@@ -55,7 +55,7 @@ import java.util.Locale
 import java.util.zip.ZipException
 import java.util.zip.ZipFile
 import java.util.zip.ZipInputStream
-import app.familygem.model.PersonWrapper // @yus: Added import for PersonWrapper
+import app.familygem.model.PersonExtra // @yus: Added import for PersonExtra
 import app.familygem.model.Association // @yus: Added import for Association
 
 fun Tree.getBasicData(): String {
