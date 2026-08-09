@@ -238,7 +238,7 @@ public class PersonEditorActivity extends BaseActivity {
 
         // @yus: Load Social Estate data
         if (person != null) {
-            PersonExtra wrapper = Global.getWrapper(person);
+            PersonExtra wrapper = Global.getOrCreateWrapper(person); // Changed from getWrapper
             if (wrapper != null) {
                 socialEstateView.setText(wrapper.getSocialEstate());
             }
