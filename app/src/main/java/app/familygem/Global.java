@@ -12,12 +12,14 @@ import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
 import org.folg.gedcom.model.Gedcom;
 import org.folg.gedcom.model.Media;
+import org.folg.gedcom.model.Person; // @yus: Added
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
+import app.familygem.model.PersonWrapper; // @yus: Association is not directly used here, but may be needed later
 
 public class Global extends Application {
 
