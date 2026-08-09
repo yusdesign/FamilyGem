@@ -23,11 +23,7 @@ android {
         }
     }
     namespace = 'app.familygem'
-    compileSdk {
-        version = release(36) {
-            it.minorApiLevel = 1
-        }
-    }
+    compileSdk = 36 // The minor API level is handled separately or can be specified differently.
     defaultConfig {
         applicationId = 'app.familygem'
         minSdk = 21
