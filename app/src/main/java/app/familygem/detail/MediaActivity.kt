@@ -33,9 +33,14 @@ class MediaActivity : DetailActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Creates new empty media
-        val destination =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) intent.getSerializableExtra(Extra.DESTINATION, Destination::class.java)
-            else intent.getSerializableExtra(Extra.DESTINATION) as Destination?
+        // val destination =
+            // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) intent.getSerializableExtra(Extra.DESTINATION, Destination::class.java)
+            // else intent.getSerializableExtra(Extra.DESTINATION) as Destination?
+        val destination = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getSerializableExtra(Extra.DESTINATION, Destination::class.java)
+            } else {
+                intent.getSerializableExtra(Extra.DESTINATION) as Destination?
+            }
         if (destination != null) {
             val media: Media
             if (destination == Destination.SIMPLE_MEDIA) { // Simple media
