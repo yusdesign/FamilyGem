@@ -4,5 +4,5 @@ class PersonExtra(
     val personId: String
 ) {
     var socialEstate: String? = null
-    var associations: MutableList<Association> = mutableListOf()
+    var associations: MutableList<Link> = mutableListOf()
 }
