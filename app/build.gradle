@@ -103,3 +103,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
     androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0'
 }
+// Ensure Java compiles before Kotlin
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    dependsOn(tasks.withType(JavaCompile).matching {
+        it.name == "compileDebugJava" || it.name == "compileReleaseJava"
+    })
+}
