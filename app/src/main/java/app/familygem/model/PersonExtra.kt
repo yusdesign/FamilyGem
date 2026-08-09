@@ -1,12 +1,8 @@
 package app.familygem.model
 
-class PersonWrapper(
+class PersonExtra(
     val personId: String
 ) {
     var socialEstate: String? = null
     var associations: MutableList<Association> = mutableListOf()
-
-    fun addAssociation(association: Association) {
-        associations.add(association)
-    }
 }
