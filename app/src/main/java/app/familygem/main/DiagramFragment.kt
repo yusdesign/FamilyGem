@@ -812,11 +812,16 @@ class DiagramFragment : BaseFragment(R.layout.diagram_fragment) {
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
             val data = result.data
             if (data != null) {
+                val relation = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    data.getSerializableExtra(Extra.RELATION, Relation::class.java)
+                } else {
+                    data.getSerializableExtra(Extra.RELATION) as Relation
+                }
                 val modified = PersonEditorActivity.addRelative(
                     data.getStringExtra(Extra.PERSON_ID), // Corresponds to 'personId', which however is annulled in case of a configuration change
                     data.getStringExtra(Extra.RELATIVE_ID),
                     data.getStringExtra(Extra.FAMILY_ID),
-                    data.getSerializableExtra(Extra.RELATION) as Relation,
+                    relation,
                     data.getStringExtra(Extra.DESTINATION)
                 )
                 TreeUtil.save(true, *modified)
