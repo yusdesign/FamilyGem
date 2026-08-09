@@ -3,6 +3,9 @@ plugins {
 }
 kotlin {
     jvmToolchain(17)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 def credentialFile = rootProject.file('credential.properties')
 def credential
@@ -63,10 +66,6 @@ android {
         coreLibraryDesugaringEnabled = true
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-    
-    kotlinOptions {
-        jvmTarget = "17"
     }
 }
 dependencies {
