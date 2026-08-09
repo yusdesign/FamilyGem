@@ -114,6 +114,12 @@ object PersonUtil {
 
     /** Creates into layout a small card of a person and returns the created view. */
     fun placeSmallPerson(layout: LinearLayout, person: Person): View {
+        if (person == null) {
+            // Handle null person gracefully
+            val emptyView = LayoutInflater.from(layout.context).inflate(R.layout.small_person_layout, layout, false)
+            layout.addView(emptyView)
+            return emptyView
+        }
         val personView = LayoutInflater.from(layout.context).inflate(R.layout.small_person_layout, layout, false)
         layout.addView(personView)
         FileUtil.selectMainImage(person, personView.findViewById(R.id.smallPerson_image))
