@@ -218,7 +218,7 @@ class PersonsFragment : BaseFragment() {
         init {
             view.setOnClickListener(this)
         }
-
+    
         override fun onClick(view: View) {
             val relative = view.getTag(R.id.tag_object) as Person
             val intent = activity!!.intent
@@ -228,7 +228,12 @@ class PersonsFragment : BaseFragment() {
                 // Searches for any existing family that can host the pivot
                 val destination = intent.getStringExtra(Extra.DESTINATION)
                 if (destination != null && destination == "EXISTING_FAMILY") {
-                    val familyId = when (intent.getSerializableExtra(Extra.RELATION) as Relation) {
+                    val relation = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        intent.getSerializableExtra(Extra.RELATION, Relation::class.java)
+                    } else {
+                        intent.getSerializableExtra(Extra.RELATION) as Relation
+                    }
+                    val familyId = when (relation) {
                         Relation.PARENT -> relative.spouseFamilyRefs.firstOrNull { it.ref != null }?.ref
                         Relation.SIBLING -> relative.parentFamilyRefs.firstOrNull { it.ref != null }?.ref
                         Relation.PARTNER -> relative.getSpouseFamilies(Global.gc).firstOrNull { it.getSpouseRefs().size < 2 }?.id
