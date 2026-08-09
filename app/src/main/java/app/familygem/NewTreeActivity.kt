@@ -159,8 +159,15 @@ class NewTreeActivity : BaseActivity(R.string.new_tree) {
         Global.settings.addTree(Settings.Tree(num, title, 0, 0, null, null, null, 0))
         Global.settings.openTree = num
         Global.settings.save()
-        onBackPressedDispatcher.onBackPressed()
-        Toast.makeText(this, R.string.tree_created, Toast.LENGTH_LONG).show()
+        
+        // ✅ Load the new tree into Global.gc
+        lifecycleScope.launch(IO) {
+            TreeUtil.openGedcom(num, true)
+            withContext(Main) {
+                onBackPressedDispatcher.onBackPressed()
+                Toast.makeText(this@NewTreeActivity, R.string.tree_created, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     /** Downloads the Simpsons ZIP file from Google Drive into the app's external cache and unzips it. */
