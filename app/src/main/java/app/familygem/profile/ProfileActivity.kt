@@ -438,7 +438,12 @@ class ProfileActivity : AppCompatActivity() {
                     getStringExtra(Extra.PERSON_ID), // Corresponds to person.id
                     getStringExtra(Extra.RELATIVE_ID),
                     getStringExtra(Extra.FAMILY_ID),
-                    getSerializableExtra(Extra.RELATION) as Relation?,
+                    // getSerializableExtra(Extra.RELATION) as Relation?,
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        getSerializableExtra(Extra.RELATION, Relation::class.java)
+                    } else {
+                        getSerializableExtra(Extra.RELATION) as Relation?
+                    },
                     getStringExtra(Extra.DESTINATION)
                 )
                 save(true, *modified)
