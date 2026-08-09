@@ -4,7 +4,7 @@ plugins {
 kotlin {
     jvmToolchain(17)
     compilerOptions {
-        jvmTarget.set("17")
+        jvmTarget.set("JVM_17")
     }
 }
 def credentialFile = rootProject.file('credential.properties')
