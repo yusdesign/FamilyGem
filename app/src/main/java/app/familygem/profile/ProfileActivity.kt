@@ -434,16 +434,16 @@ class ProfileActivity : AppCompatActivity() {
     val choosePersonLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             it.data?.apply {
+                val relation = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    getSerializableExtra(Extra.RELATION, Relation::class.java)
+                } else {
+                    getSerializableExtra(Extra.RELATION) as Relation?
+                }
                 val modified = PersonEditorActivity.addRelative(
                     getStringExtra(Extra.PERSON_ID), // Corresponds to person.id
                     getStringExtra(Extra.RELATIVE_ID),
                     getStringExtra(Extra.FAMILY_ID),
-                    // getSerializableExtra(Extra.RELATION) as Relation?,
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        getSerializableExtra(Extra.RELATION, Relation::class.java)
-                    } else {
-                        getSerializableExtra(Extra.RELATION) as Relation?
-                    },
+                    relation,
                     getStringExtra(Extra.DESTINATION)
                 )
                 save(true, *modified)
