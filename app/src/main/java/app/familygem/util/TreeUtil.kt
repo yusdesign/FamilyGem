@@ -55,8 +55,8 @@ import java.util.Locale
 import java.util.zip.ZipException
 import java.util.zip.ZipFile
 import java.util.zip.ZipInputStream
-import app.familygem.model.PersonWrapper // @yus: Added import for PersonWrapper
-import app.familygem.model.Association // @yus: Added import for Association
+import app.familygem.model.PersonExtra // @yus: Added import for PersonExtra
+import app.familygem.model.Link // @yus: Added import for Link
 
 fun Tree.getBasicData(): String {
     val builder = StringBuilder()
@@ -121,7 +121,7 @@ object TreeUtil {
             gedcom = JsonParser().fromJson(json)
             if (gedcom == null) throw Exception(string(R.string.no_useful_data))
             
-            // @yus: Load PersonWrapper data from the separate JSON file
+            // @yus: Load PersonExtra data from the separate JSON file
             loadWrappers(treeId)
             
             // This Notifier was introduced in version 0.9.1
@@ -152,7 +152,7 @@ object TreeUtil {
             val json = FileUtils.readFileToString(wrappersFile, "UTF-8")
             val gson = Gson()
             // We need to define a TypeToken for Map<String, PersonWrapper>
-            val type = object : TypeToken<Map<String, PersonWrapper>>() {}.type
+            val type = object : TypeToken<Map<String, PersonExtra>>() {}.type
             Global.personWrappers = gson.fromJson(json, type)
         } catch (e: Exception) {
             // If loading fails, start fresh
