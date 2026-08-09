@@ -69,7 +69,8 @@ public class PersonEditorActivity extends BaseActivity {
         Intent intent = getIntent();
         personId = intent.getStringExtra(Extra.PERSON_ID);
         familyId = intent.getStringExtra(Extra.FAMILY_ID);
-        relation = (Relation)intent.getSerializableExtra(Extra.RELATION);
+        // relation = (Relation)intent.getSerializableExtra(Extra.RELATION);
+        relation = intent.getSerializableExtra(Extra.RELATION, Relation.class);
         fromFamilyActivity = intent.getBooleanExtra(Extra.FROM_FAMILY, false);
         nameSuffix = "";
 
