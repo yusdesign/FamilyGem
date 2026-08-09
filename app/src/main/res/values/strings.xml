@@ -143,7 +143,7 @@
     <string name="replace">Replace</string>
     <string name="ignore">Skip</string>
     <string name="confirm_news">Confirm updates</string>
-    <string name="accepted_news">You accepted %d updates:\n\t%d additions\n\t%d replacements\n\t%d deletions</string>
+    <string name="accepted_news" formatted="false">You accepted %d updates:\n\t%d additions\n\t%d replacements\n\t%d deletions</string>
     <string name="confirm">Confirm</string>
     <string name="all_imported_delete">All updates have been imported.\nDo you want to delete the imported tree\?</string>
     <string name="merge_tree">Merge tree</string>
@@ -160,7 +160,7 @@
     <string name="merge_complete">Merge completed.</string>
     <string name="birthdays">Birthdays</string>
     <string name="person_birthday">The birthday of every living person.</string>
-    <string name="turns_years_old">%s turns %d years old today.</string>
+    <string name="turns_years_old" formatted="false">%s turns %d years old today.</string>
     <string name="new_person">Add the first person.</string>
     <string name="card">Profile</string>
     <string name="family_as_child">Family (as child)</string>
