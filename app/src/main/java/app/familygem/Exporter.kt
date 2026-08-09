@@ -13,11 +13,15 @@ import kotlinx.coroutines.yield
 import org.apache.commons.io.FileUtils
 import org.folg.gedcom.model.Gedcom
 import org.folg.gedcom.model.Media
+import org.folg.gedcom.model.EventFact // @yus: added 
 import org.folg.gedcom.visitors.GedcomWriter
+import app.familygem.model.PersonWrapper // @yus: 
+import app.familygem.model.Association // @yus:
 import java.io.File
 import java.io.IOException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
+
 
 /** Utility class to export a tree as GEDCOM or ZIP backup. */
 class Exporter(private val context: Context, private val progressView: ProgressView? = null) {
