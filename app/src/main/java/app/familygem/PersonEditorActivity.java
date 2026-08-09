@@ -236,7 +236,7 @@ public class PersonEditorActivity extends BaseActivity {
         deathDateEditor.initialize(deathDate, findViewById(R.id.editor_deathAlert));
 
         // @yus: Social Person Wrapper
-        PersonWrapper wrapper = getWrap
+        PersonWrapper wrapper = getWrapper(person);
         if (wrapper != null){
             socialEstateVie.setText(wrapper.getSocialEstate());
         }
