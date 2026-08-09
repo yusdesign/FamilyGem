@@ -15,8 +15,8 @@ import org.folg.gedcom.model.Gedcom
 import org.folg.gedcom.model.Media
 import org.folg.gedcom.model.EventFact // @yus: added 
 import org.folg.gedcom.visitors.GedcomWriter
-import app.familygem.model.PersonWrapper // @yus: 
-import app.familygem.model.Association // @yus:
+import app.familygem.model.PersonExtra // @yus: 
+import app.familygem.model.Link // @yus:
 import java.io.File
 import java.io.IOException
 import java.util.zip.ZipEntry
