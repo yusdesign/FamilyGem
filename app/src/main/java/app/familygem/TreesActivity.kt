@@ -295,7 +295,13 @@ class TreesActivity : AppCompatActivity() {
         // FAB
         findViewById<View>(R.id.fab).setOnClickListener {
             welcome.hide()
-            startActivity(Intent(this, NewTreeActivity::class.java))
+            if (Global.settings.trees.isNotEmpty()) {
+                // If there is at least one tree, open the Person Editor
+                startActivity(Intent(this, PersonEditorActivity::class.java))
+            } else {
+                // If no trees exist, create a new tree first
+                startActivity(Intent(this, NewTreeActivity::class.java))
+            }
         }
 
         // Automatic load of last opened tree of previous session
