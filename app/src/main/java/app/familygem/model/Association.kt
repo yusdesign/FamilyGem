@@ -1,4 +1,4 @@
-package app.familygem.model
+package app.familygem.model.extra
 
 class Association(
     var personId: String? = null,
