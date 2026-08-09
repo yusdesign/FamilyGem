@@ -164,6 +164,7 @@ class NewTreeActivity : BaseActivity(R.string.new_tree) {
         lifecycleScope.launch(IO) {
             TreeUtil.openGedcom(num, true)
             withContext(Main) {
+                // Return to TreesActivity
                 onBackPressedDispatcher.onBackPressed()
                 Toast.makeText(this@NewTreeActivity, R.string.tree_created, Toast.LENGTH_LONG).show()
             }
