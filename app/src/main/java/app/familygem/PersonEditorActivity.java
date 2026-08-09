@@ -34,6 +34,7 @@ import app.familygem.constant.Relation;
 import app.familygem.util.EventUtilKt;
 import app.familygem.util.FamilyUtil;
 import app.familygem.util.TreeUtil;
+import app.familygem.model.PersonExtra;
 
 public class PersonEditorActivity extends BaseActivity {
 
@@ -128,7 +129,7 @@ public class PersonEditorActivity extends BaseActivity {
             save();
         });
 
-        socialEstateView = findVieById(R.id.editor_social_estate); // @yus: Social Estate Editor
+        socialEstateView = findViewById(R.id.editor_social_estate); // @yus: Social Estate Editor
         
         if (TreeUtil.INSTANCE.isGlobalGedcomOk(this::populateFields)) populateFields();
     }
@@ -235,10 +236,10 @@ public class PersonEditorActivity extends BaseActivity {
         birthDateEditor.initialize(birthDate, findViewById(R.id.editor_birthAlert));
         deathDateEditor.initialize(deathDate, findViewById(R.id.editor_deathAlert));
 
-        // @yus: Social Person Wrapper
-        PersonWrapper wrapper = getWrapper(person);
+        // @yus: Social Person Extra Data
+        PersonExtra wrapper = getWrapper(person);
         if (wrapper != null){
-            socialEstateVie.setText(wrapper.getSocialEstate());
+            socialEstateView.setText(wrapper.getSocialEstate());
         }
     }
 
@@ -381,12 +382,12 @@ public class PersonEditorActivity extends BaseActivity {
         }
 
         // @yus: Save Social Estate
-        PersonWrapper wrapper = getWrapper(person);
+        PersonExtra wrapper = getWrapper(person);
         if (wrapper == null){
-            wrapper = new PersonWrapper(person);
+            wrapper = new PersonExtra(person);
             // Store for wrapper (e.g. Global.wrappers.map)
         }
-        wrapper.setSocialEstate(socialEdtateView.getText().toString().trim());
+        wrapper.setSocialEstate(socialEstateView.getText().toString().trim());
 
         // Finalization of new person
         Object[] modifications = {person, null}; // The null is used to receive a possible Family
