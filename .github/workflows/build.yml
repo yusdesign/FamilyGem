@@ -28,8 +28,8 @@ jobs:
     - name: Kill Gradle Daemon
       run: ./gradlew --stop
     
-    - name: Clean Build
-      run: ./gradlew clean --no-daemon
+    - name: Clean Build Directory
+      run: rm -rf app/build/
     
     - name: Build Debug APK
       run: ./gradlew assembleDebug --no-daemon --no-build-cache
