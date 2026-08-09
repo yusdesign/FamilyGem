@@ -384,9 +384,11 @@ public class PersonEditorActivity extends BaseActivity {
         }
 
         // @yus: Save Social Estate data
-        PersonExtra wrapper = Global.getOrCreateWrapper(person);
-        if (wrapper != null) {
-            wrapper.setSocialEstate(socialEstateView.getText().toString().trim());
+        if (socialEstateView != null) {
+            PersonExtra wrapper = Global.getOrCreateWrapper(person);
+            if (wrapper != null) {
+                wrapper.setSocialEstate(socialEstateView.getText().toString().trim());
+            }
         }
 
         // Finalization of new person
