@@ -1,6 +1,6 @@
 package app.familygem.model
 
-class Association(
+class Link(
     var personId: String? = null,
     var relationship: String? = null,
     var type: String? = null,
